@@ -32,24 +32,31 @@ export default function Results() {
   });
 
   const [prueba, setPrueba] = useState(null);
+  const [req, setReq] = useState('No');
+
+  //Object to can obtain the params
+  const route = useRoute();
 
   useEffect(() => {
     const fetchData = async () => {
-      // Define an async function
 
       try {
-        let response_prueba = await fetch(
-          "https://www.themealdb.com/api/json/v1/1/filter.php?a=Canadian"
-        );
-        let data_prueba = await response_prueba.json();
-        setPrueba(data_prueba);
+
+        const {data} = route.params;
+
+          // "https://www.themealdb.com/api/json/v1/1/filter.php?a=Canadian"
+
+        // let response_prueba = await fetch(JSON.stringify(request));
+        // let data_prueba = await response_prueba.json();
+        setPrueba(data);
+        // setReq(JSON.stringify(request))
       } catch (error) {
         setPrueba(null);
         console.log(error);
       }
     };
     fetchData();
-  }, []);
+  }, [route.params]);
 
   const navigation = useNavigation();
 
@@ -188,7 +195,7 @@ const ResultStyles = StyleSheet.create({
     fontFamily: 'Inter-Medium',
     fontSize: 12,
     color: colorPalette.white,
-    marginLeft: 15,
+    marginLeft: 10,
   },
   next:{
     width: 12,
